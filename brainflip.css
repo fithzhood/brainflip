@@ -1,0 +1,599 @@
+/* Reset base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: sans-serif;
+    line-height: 1.6;
+    background-color: #e0f2f1; /* Verde pastello */
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Allinea all'inizio per header */
+    min-height: 100vh;
+    padding-top: 70px; /* Spazio per header fisso */
+}
+
+.app-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px; /* Limita larghezza su schermi grandi */
+    margin: 10px;
+}
+
+header {
+    background-color: #444;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    position: fixed; /* Fissa l'header in alto */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.5em;
+    float: left;
+}
+
+nav {
+    float: right;
+}
+
+.nav-btn {
+    background: none;
+    border: 1px solid white;
+    color: white;
+    padding: 5px 10px;
+    margin-left: 5px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.nav-btn.active,
+.nav-btn:hover {
+    background-color: white;
+    color: #444;
+}
+
+main {
+    margin-top: 10px; /* Spazio sotto l'header non fisso */
+     clear: both; /* Pulisce i float dell'header */
+}
+
+/* Gestione Visibilità Viste */
+.view {
+    display: none; /* Nasconde le viste per default */
+}
+
+.view.active-view {
+    display: block; /* Mostra solo la vista attiva */
+}
+
+/* Stile Card Generico (Domanda/Risposte) */
+.card {
+    background-color: #eee;
+    border: 1px solid #ddd;
+    border-radius: 15px; /* Bordi arrotondati come nell'immagine */
+    padding: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    word-wrap: break-word; /* Evita overflow testo */
+    min-height: 60px; /* Altezza minima per coerenza */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Vista Quiz */
+#quiz-content {
+    margin-top: 20px;
+}
+
+.question-card {
+    font-size: 1.15em;
+    min-height: 64px;
+    font-weight: bold;
+    background-color: #e0e0e0;
+}
+
+/* Aggiunta stile per immagine dentro la card domanda */
+.question-card img {
+    max-width: 100%;
+    max-height: 130px;
+    display: block;
+    margin: 0 auto; /* Centra l'immagine se più piccola del contenitore */
+}
+
+.answers-grid {
+    display: grid;
+    /* Una sola colonna: su un telefono ogni risposta prende tutta la larghezza,
+       quindi le formule si leggono senza strizzare gli occhi. */
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.answer-card {
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.answer-card:hover {
+    background-color: #dcdcdc;
+}
+
+/* Stili Feedback Risposte */
+.answer-card.correct {
+    border: 3px solid #28a745; /* Verde */
+    background-color: #d4edda;
+}
+
+.answer-card.incorrect {
+    border: 3px solid #dc3545; /* Rosso */
+    background-color: #f8d7da;
+}
+
+/* Pulsanti Generici */
+.btn {
+    display: block;
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 1em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: background-color 0.3s;
+    text-align: center;
+}
+
+#next-question-btn {
+    background-color: #007bff;
+    color: white;
+}
+
+#next-question-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Vista Gestione Card */
+#card-mode-view h2, #card-mode-view h3 {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+#card-list {
+    list-style: none;
+    padding: 0;
+    max-height: 250px; /* Limita altezza lista */
+    overflow-y: auto; /* Scroll se necessario */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.card-list-item {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.card-list-item:last-child {
+    border-bottom: none;
+}
+
+.card-list-item:hover {
+    background-color: #f0f0f0;
+}
+
+.card-list-item.new-card-item {
+    font-weight: bold;
+    text-align: center;
+    color: #007bff;
+}
+
+/* Editor Card */
+#card-editor-container {
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group input[type="text"],
+.form-group textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.form-group textarea {
+    resize: vertical; /* Permetti resize verticale */
+}
+
+#answers-editor h4 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.answer-edit-group {
+    border: 1px dashed #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    background-color: #fff;
+}
+
+.answer-edit-group input[type="radio"] {
+    margin-right: 5px;
+}
+
+.answer-edit-group label {
+    font-weight: normal; /* Label meno marcata qui */
+}
+
+.answer-text-input {
+    width: calc(100% - 30px); /* Lascia spazio per radio button */
+    margin-left: 5px;
+    margin-bottom: 5px;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.image-upload-label {
+    display: inline-block;
+    padding: 4px 8px;
+    background-color: #6c757d;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8em;
+    margin-left: 10px;
+}
+
+.image-upload-label:hover {
+    background-color: #5a6268;
+}
+
+.answer-image-input,
+.question-image-input {
+    display: none; /* Nascondi input file standard */
+}
+
+.image-preview {
+    display: block;
+    max-width: 100px;
+    max-height: 50px;
+    margin-top: 5px;
+    border: 1px solid #eee;
+    object-fit: contain; /* Mantieni proporzioni immagine */
+    display: none; /* Nascosta di default */
+}
+
+/* Pulsanti per rimuovere immagini */
+.remove-image-btn,
+.remove-answer-image-btn {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #dc3545;
+    color: white;
+    border: 2px solid white;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.2s, transform 0.1s;
+    z-index: 10;
+}
+
+.remove-image-btn:hover,
+.remove-answer-image-btn:hover {
+    background-color: #c82333;
+    transform: scale(1.1);
+}
+
+.remove-image-btn:active,
+.remove-answer-image-btn:active {
+    transform: scale(0.95);
+}
+
+.editor-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+.editor-buttons .btn {
+    width: auto;
+    padding: 5px 10px;
+    font-size: 0.9em;
+    margin-bottom: 5px;
+}
+
+.save-btn {
+    background-color: #28a745;
+    color: white;
+}
+.save-btn:hover { background-color: #218838; }
+
+.delete-btn {
+    background-color: #dc3545;
+    color: white;
+}
+.delete-btn:hover { background-color: #c82333; }
+
+.back-btn {
+    background-color: #6c757d;
+    color: white;
+}
+.back-btn:hover { background-color: #5a6268; }
+
+/* Pulsanti Esporta/Importa */
+.import-export-buttons {
+    display: flex;
+    justify-content: space-around; /* Spazia i pulsanti */
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #eee; /* Separatore visivo */
+    gap: 10px; /* Spazio tra i pulsanti */
+    flex-wrap: wrap; /* Permette la disposizione su più righe se necessario */
+}
+
+.import-export-buttons .btn {
+    width: 31%; /* Ridotto per accomodare tre pulsanti */
+    margin-top: 0; /* Rimuove margine top del .btn generico */
+    padding: 8px 10px;
+    font-size: 0.9em;
+}
+
+.export-btn {
+    background-color: #17a2b8; /* Azzurro info */
+    color: white;
+}
+.export-btn:hover { background-color: #138496; }
+
+.import-btn {
+    background-color: #ffc107; /* Giallo warning */
+    color: #333;
+}
+.import-btn:hover { background-color: #e0a800; }
+
+/* Pulsante Copia Testo */
+.copy-btn {
+    background-color: #fd7e14; /* Arancione */
+    color: white;
+}
+.copy-btn:hover { background-color: #e66800; }
+
+/* Stili per immagini nelle risposte del quiz */
+.answer-card img {
+  max-width: 100%;
+  /* In colonna singola la risposta ha tutta la larghezza, quindi l'immagine
+     puo' essere piu' alta di quanto serviva nella vecchia griglia 2x2. */
+  max-height: 110px;
+  display: block;
+  margin: 0 auto;
+  object-fit: contain;
+}
+
+/* --- Stili GIF Mode Easter Egg --- */
+
+/* Contenitore App in GIF Mode */
+.app-container.gif-mode-active {
+    background-color: #333; /* Sfondo scuro */
+    color: #f0f0f0; /* Testo chiaro di default */
+}
+
+/* Sovrascrivi stili elementi interni per tema scuro */
+
+/* Card generiche (domanda/risposta) */
+.app-container.gif-mode-active .card {
+    background-color: #444;
+    border-color: #555;
+    color: #f0f0f0;
+}
+
+.app-container.gif-mode-active .question-card {
+    background-color: #505050; /* Leggermente diverso per distinguerla */
+}
+
+/* Feedback risposte su sfondo scuro */
+.app-container.gif-mode-active .answer-card.correct {
+    border: 3px solid #33cc33; /* Verde più brillante */
+    background-color: #444; /* Mantiene sfondo scuro card */
+    /* Potremmo aggiungere un'ombra interna verde? */
+}
+
+.app-container.gif-mode-active .answer-card.incorrect {
+    border: 3px solid #ff4d4d; /* Rosso più brillante */
+    background-color: #444; /* Mantiene sfondo scuro card */
+}
+
+/* Lista card */
+.app-container.gif-mode-active #card-list {
+    border-color: #555;
+}
+
+.app-container.gif-mode-active .card-list-item {
+    background-color: #444;
+    border-bottom: 1px solid #555;
+    color: #f0f0f0;
+}
+
+.app-container.gif-mode-active .card-list-item:last-child {
+    border-bottom: none;
+}
+
+.app-container.gif-mode-active .card-list-item:hover {
+    background-color: #555;
+}
+
+.app-container.gif-mode-active .card-list-item.new-card-item {
+    color: #80cbc4; /* Un ciano/verde acqua chiaro */
+}
+
+/* Editor card */
+.app-container.gif-mode-active #card-editor-container {
+    background-color: #3a3a3a;
+    border-color: #555;
+}
+
+.app-container.gif-mode-active .form-group label {
+    color: #ccc; /* Grigio chiaro per le label */
+}
+
+.app-container.gif-mode-active .form-group input[type="text"],
+.app-container.gif-mode-active .form-group textarea {
+    background-color: #555;
+    border-color: #666;
+    color: #f0f0f0;
+}
+
+.app-container.gif-mode-active .answer-edit-group {
+    background-color: #444;
+    border-color: #555;
+}
+
+.app-container.gif-mode-active .answer-text-input {
+    background-color: #555;
+    border-color: #666;
+    color: #f0f0f0;
+}
+
+/* Pulsanti - per ora li lascio invariati, potrebbero spiccare abbastanza */
+/* Header - Anche l'header ha già uno sfondo scuro, potrebbe andare bene */
+
+/* Testo titoli */
+.app-container.gif-mode-active h2,
+.app-container.gif-mode-active h3,
+.app-container.gif-mode-active h4 {
+    color: #f0f0f0;
+}
+
+/* Messaggio "no cards" */
+.app-container.gif-mode-active #no-cards-message p {
+    color: #ccc;
+}
+
+/* Overlay nero a schermo intero */
+#gif-overlay {
+    display: none; /* Nascosto di default */
+    position: fixed; /* Copre l'intera viewport */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.95); /* Nero quasi opaco */
+    z-index: 2000; /* Sopra tutto il resto */
+    justify-content: center;
+    align-items: center;
+    padding: 20px; /* Spazio dai bordi */
+    box-sizing: border-box;
+}
+
+/* Immagine GIF dentro l'overlay */
+#gif-overlay img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Mantiene le proporzioni */
+    border-radius: 5px; /* Piccoli bordi arrotondati */
+}
+
+/* Numero durata GIF */
+#gif-duration-display {
+    position: absolute;
+    top: 30px; /* Spazio dall'alto */
+    left: 50%; /* Centrato orizzontalmente */
+    transform: translateX(-50%);
+    color: rgba(255, 255, 255, 0.6); /* Bianco semitrasparente */
+    font-size: 3em; /* Grande */
+    font-weight: bold;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.5); /* Ombra per leggibilità */
+    display: none; /* Nascosto di default, mostrato con JS */
+} 
+/* Riga discreta che dichiara quale build sta girando. */
+.build-label {
+    font-size: 0.7rem;
+    color: #888;
+    text-align: center;
+    margin-top: 6px;
+}
+
+/* --- Quiz a schermata unica --------------------------------------------
+   Le risposte sono incolonnate e si dividono in parti uguali lo spazio che
+   avanza sotto la domanda: cosi' le formule sono grandi quanto lo schermo
+   permette e non si scorre mai durante il quiz. */
+#quiz-content {
+    display: flex;
+    flex-direction: column;
+    height: calc(100svh - 150px);
+    min-height: 320px;
+    margin-top: 10px;
+}
+
+#quiz-content .question-card {
+    flex: 0 0 auto;
+}
+
+#quiz-content .answers-grid {
+    flex: 1 1 auto;
+    grid-template-rows: repeat(4, 1fr);
+    min-height: 0;
+}
+
+#quiz-content .answer-card {
+    min-height: 0;
+    overflow: hidden;
+    padding: 6px;
+}
+
+#quiz-content .answer-card img {
+    max-height: 100%;
+    max-width: 100%;
+    height: auto;
+    width: auto;
+}
+
+#quiz-content #next-question-btn {
+    flex: 0 0 auto;
+    margin-top: 10px;
+}

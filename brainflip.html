@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Flashcard App</title>
+    <link rel="stylesheet" href="brainflip.css?v=4">
+</head>
+<body>
+
+    <header>
+        <h1>BrainFlip</h1>
+        <nav>
+            <button id="quiz-mode-btn" class="nav-btn active">Quiz</button>
+            <button id="card-mode-btn" class="nav-btn">Gestisci Card</button>
+        </nav>
+    </header>
+
+    <div class="app-container">
+        <main>
+            <!-- Vista Quiz (Default) -->
+            <section id="quiz-view" class="view active-view">
+                <div id="quiz-content">
+                    <div id="question-display" class="card question-card">Caricamento domanda...</div>
+                    <div id="answers-display" class="answers-grid">
+                        <!-- Le card risposta verranno generate da JS -->
+                    </div>
+                    <button id="next-question-btn" class="btn" style="display: none;">Prossima Domanda</button>
+                </div>
+                 <div id="quiz-complete" style="display: none; text-align: center;">
+                    <h2>Quiz Completato!</h2>
+                    <p>Punteggio: <span id="final-score">0</span>/<span id="total-questions">0</span></p>
+                    <button id="restart-quiz-btn" class="btn">Ricomincia</button>
+                </div>
+                 <div id="no-cards-message" style="display: none; text-align: center; padding: 20px;">
+                    <p>Non ci sono ancora flashcard.<br>Vai alla sezione "Gestisci Card" per crearne qualcuna!</p>
+                 </div>
+            </section>
+
+            <!-- Vista Gestione Card -->
+            <section id="card-mode-view" class="view">
+                <h2>Gestisci le tue Flashcard</h2>
+
+                <!-- Lista Card Esistenti -->
+                <div id="card-list-container">
+                    <h3>Le mie Card</h3>
+                    <ul id="card-list">
+                        <!-- La lista verrà popolata da JS -->
+                        <li class="card-list-item new-card-item" data-id="new">+ Crea Nuova Card</li>
+                    </ul>
+                    <!-- Pulsanti Esporta/Importa -->
+                    <div class="import-export-buttons">
+                        <button id="export-cards-btn" class="btn export-btn">Esporta Dati</button>
+                        <button id="import-cards-btn" class="btn import-btn">Importa Dati</button>
+                        <button id="clear-storage-btn" class="btn delete-btn">Cancella Dati</button>
+                        <input type="file" id="import-file-input" style="display: none;">
+                    </div>
+                    <p id="build-label" class="build-label"></p>
+                </div>
+
+                <!-- Editor Card (nascosto inizialmente) -->
+                <div id="card-editor-container" style="display: none;">
+                    <h3 id="editor-title">Crea/Modifica Card</h3>
+                    <input type="hidden" id="editing-card-id"> <!-- Per sapere quale card stiamo modificando -->
+
+                    <div class="form-group">
+                        <label for="question-input">Domanda:</label>
+                        <textarea id="question-input" rows="3" placeholder="Inserisci la domanda..."></textarea>
+                        <div style="margin-top: 5px; display: flex; align-items: center; gap: 10px;">
+                            <span>oppure</span>
+                            <label class="image-upload-label">
+                                Carica Img
+                                <input type="file" id="question-image-input" class="question-image-input" accept="image/png, image/jpeg, image/gif">
+                            </label>
+                            <div style="position: relative; display: inline-block;">
+                                <img src="" alt="Anteprima Domanda" id="question-image-preview" class="image-preview" style="max-height: 50px; max-width: 100px;">
+                                <button type="button" id="remove-question-image-btn" class="remove-image-btn" style="display: none;" title="Rimuovi immagine">×</button>
+                            </div>
+                        </div>
+                        <input type="hidden" id="question-image-data" value="">
+                    </div>
+
+                    <div id="answers-editor">
+                        <h4>Risposte (Seleziona quella corretta):</h4>
+                        <!-- Gruppi per le 4 risposte (generate o gestite da JS?) -->
+                        <!-- Esempio struttura per una risposta -->
+                        <div class="answer-edit-group" data-answer-index="0">
+                            <input type="radio" name="correct-answer-radio" id="correct-answer-0" value="0">
+                            <label for="correct-answer-0">Corretta?</label>
+                            <input type="text" class="answer-text-input" placeholder="Testo Risposta 1">
+                            <span>oppure</span>
+                            <label class="image-upload-label">
+                                Carica Img
+                                <input type="file" class="answer-image-input" accept="image/png, image/jpeg, image/gif">
+                            </label>
+                            <div style="position: relative; display: inline-block;">
+                                <img src="" alt="Anteprima" class="image-preview">
+                                <button type="button" class="remove-answer-image-btn" style="display: none;" title="Rimuovi immagine">×</button>
+                            </div>
+                             <input type="hidden" class="answer-data" value=""> <!-- Per salvare testo o Base64 img -->
+                        </div>
+                         <div class="answer-edit-group" data-answer-index="1">
+                            <input type="radio" name="correct-answer-radio" id="correct-answer-1" value="1">
+                            <label for="correct-answer-1">Corretta?</label>
+                            <input type="text" class="answer-text-input" placeholder="Testo Risposta 2">
+                             <span>oppure</span>
+                             <label class="image-upload-label">
+                                Carica Img
+                                <input type="file" class="answer-image-input" accept="image/png, image/jpeg, image/gif">
+                            </label>
+                            <div style="position: relative; display: inline-block;">
+                                <img src="" alt="Anteprima" class="image-preview">
+                                <button type="button" class="remove-answer-image-btn" style="display: none;" title="Rimuovi immagine">×</button>
+                            </div>
+                             <input type="hidden" class="answer-data" value="">
+                        </div>
+                         <div class="answer-edit-group" data-answer-index="2">
+                            <input type="radio" name="correct-answer-radio" id="correct-answer-2" value="2">
+                            <label for="correct-answer-2">Corretta?</label>
+                            <input type="text" class="answer-text-input" placeholder="Testo Risposta 3">
+                             <span>oppure</span>
+                            <label class="image-upload-label">
+                                Carica Img
+                                <input type="file" class="answer-image-input" accept="image/png, image/jpeg, image/gif">
+                            </label>
+                            <div style="position: relative; display: inline-block;">
+                                <img src="" alt="Anteprima" class="image-preview">
+                                <button type="button" class="remove-answer-image-btn" style="display: none;" title="Rimuovi immagine">×</button>
+                            </div>
+                             <input type="hidden" class="answer-data" value="">
+                        </div>
+                         <div class="answer-edit-group" data-answer-index="3">
+                            <input type="radio" name="correct-answer-radio" id="correct-answer-3" value="3">
+                            <label for="correct-answer-3">Corretta?</label>
+                            <input type="text" class="answer-text-input" placeholder="Testo Risposta 4">
+                             <span>oppure</span>
+                            <label class="image-upload-label">
+                                Carica Img
+                                <input type="file" class="answer-image-input" accept="image/png, image/jpeg, image/gif">
+                            </label>
+                            <div style="position: relative; display: inline-block;">
+                                <img src="" alt="Anteprima" class="image-preview">
+                                <button type="button" class="remove-answer-image-btn" style="display: none;" title="Rimuovi immagine">×</button>
+                            </div>
+                             <input type="hidden" class="answer-data" value="">
+                        </div>
+                    </div>
+
+                    <div class="editor-buttons">
+                        <button id="save-card-btn" class="btn save-btn">Salva Card</button>
+                        <button id="delete-card-btn" class="btn delete-btn" style="display: none;">Elimina Card</button>
+                        <button id="back-to-list-btn" class="btn back-btn">Annulla/Indietro</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Overlay per la modalità GIF (nascosto di default) -->
+    <div id="gif-overlay">
+        <img id="gif-display" src="" alt="">
+        <span id="gif-duration-display"></span> <!-- Per mostrare la durata -->
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="brainflip.js?v=4"></script>
+</body>
+</html> 
