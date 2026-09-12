@@ -597,3 +597,22 @@ main {
     flex: 0 0 auto;
     margin-top: 10px;
 }
+
+/* --- Foro della fotocamera ---------------------------------------------
+   Nell'APK le barre di sistema sono nascoste, e in quella modalita' Capacitor
+   non inietta le variabili env(safe-area-inset-*): valgono zero. Il foro della
+   fotocamera pero' c'e' lo stesso, alto 77 px fisici (circa 27 CSS) e centrato
+   in alto, proprio sopra i pulsanti dell'intestazione. Si tiene quindi un
+   margine esplicito, usando env() se un giorno tornasse disponibile. */
+body.capacitor {
+    --foro: 34px;
+    padding-top: calc(70px + var(--foro));
+}
+
+body.capacitor header {
+    padding-top: calc(10px + max(env(safe-area-inset-top, 0px), var(--foro)));
+}
+
+body.capacitor #quiz-content {
+    height: calc(100svh - 150px - var(--foro));
+}
