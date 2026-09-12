@@ -676,6 +676,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 answerDiv.dataset.originalIndex = originalIndex; // <<< NUOVO DATASET con indice originale
 
                 if (answer.type === 'text') {
+                    // La classe serve al foglio di stile: una risposta scritta
+                    // deve crescere quanto una figura, non restare minuscola in
+                    // mezzo a una card alta.
+                    answerDiv.classList.add('answer-text');
                     answerDiv.textContent = answer.content;
                 } else if (answer.type === 'image') {
                     const img = document.createElement('img');

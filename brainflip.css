@@ -680,3 +680,11 @@ nav {
 nav .nav-btn {
     margin-left: 0;
 }
+
+/* Una risposta scritta deve pesare quanto una figura: nella colonna singola la
+   card e' alta, e un testo piccolo al centro sembrava perso. */
+#quiz-content .answer-card.answer-text {
+    font-size: 1.5rem;
+    line-height: 1.25;
+    padding: 10px 12px;
+}
