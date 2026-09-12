@@ -633,24 +633,23 @@ document.addEventListener('DOMContentLoaded', () => {
         if (currentQuestionIndex < currentQuizCards.length) {
             const card = currentQuizCards[currentQuestionIndex];
 
-            // --- Visualizza Immagine o Testo per la Domanda --- //
-            // Se c'è sia testo che immagine, mostra SOLO l'immagine nel quiz
+            // --- Visualizza Titolo e/o Immagine della Domanda --- //
+            // Ogni domanda ha un titolo, e lo si mostra sempre: se c'e' anche
+            // una figura, il titolo le sta sopra invece di sparire.
+            if (card.questionText) {
+                const questionTextDiv = document.createElement('div');
+                questionTextDiv.className = 'question-title';
+                questionTextDiv.textContent = card.questionText;
+                questionDisplay.appendChild(questionTextDiv);
+            }
             if (card.questionImage) {
-                // Mostra solo l'immagine (anche se c'è anche testo)
                 const img = document.createElement('img');
                 img.src = card.questionImage;
                 img.alt = card.questionText || "Immagine domanda";
                 // Le misure le decide il foglio di stile: in linea vincerebbero
                 // sempre loro e il quiz non potrebbe adattarsi allo schermo.
                 questionDisplay.appendChild(img);
-            } else if (card.questionText) {
-                // Mostra il testo solo se non c'è immagine
-                const questionTextDiv = document.createElement('div');
-                questionTextDiv.textContent = card.questionText;
-                questionDisplay.appendChild(questionTextDiv);
             }
-            // Imposta altezza minima per assicurare spazio
-            questionDisplay.style.minHeight = '100px';
 
             // --- Fine visualizzazione domanda --- //
 
