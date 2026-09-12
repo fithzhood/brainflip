@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Flashcard App</title>
-    <link rel="stylesheet" href="brainflip.css?v=6">
+    <link rel="stylesheet" href="brainflip.css?v=7">
 </head>
 <body>
 
     <header>
-        <h1>BrainFlip</h1>
+        <h1>BrainFlip<span id="build-tag" class="build-tag"></span></h1>
         <nav>
             <button id="quiz-mode-btn" class="nav-btn active">Quiz</button>
             <button id="card-mode-btn" class="nav-btn">Gestisci Card</button>
@@ -55,7 +55,6 @@
                         <button id="clear-storage-btn" class="btn delete-btn">Cancella Dati</button>
                         <input type="file" id="import-file-input" style="display: none;">
                     </div>
-                    <p id="build-label" class="build-label"></p>
                 </div>
 
                 <!-- Editor Card (nascosto inizialmente) -->
@@ -163,6 +162,6 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <script src="brainflip.js?v=6"></script>
+    <script src="brainflip.js?v=7"></script>
 </body>
 </html> 

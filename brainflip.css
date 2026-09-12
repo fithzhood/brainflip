@@ -550,12 +550,14 @@ main {
     text-shadow: 1px 1px 3px rgba(0,0,0,0.5); /* Ombra per leggibilità */
     display: none; /* Nascosto di default, mostrato con JS */
 } 
-/* Riga discreta che dichiara quale build sta girando. */
-.build-label {
-    font-size: 0.7rem;
-    color: #888;
-    text-align: center;
-    margin-top: 6px;
+/* Numero di build, piccolo accanto al titolo: dice a colpo d'occhio quale
+   versione sta girando sul telefono. */
+.build-tag {
+    font-size: 0.5em;
+    font-weight: normal;
+    opacity: 0.55;
+    margin-left: 6px;
+    vertical-align: super;
 }
 
 /* --- Quiz a schermata unica --------------------------------------------
@@ -648,4 +650,33 @@ textarea,
 #question-display img + .question-title,
 .question-title + img {
     margin-top: 2px;
+}
+
+/* --- Intestazione allineata ---------------------------------------------
+   Titolo e pulsanti stavano su due float, che non si allineano fra loro in
+   verticale: i pulsanti sembravano piu' in alto. Con un allineamento vero
+   stanno sulla stessa linea di mezzo. */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+header h1 {
+    float: none;
+    display: flex;
+    align-items: baseline;
+    line-height: 1.1;
+}
+
+nav {
+    float: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+nav .nav-btn {
+    margin-left: 0;
 }

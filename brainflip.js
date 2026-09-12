@@ -1144,8 +1144,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Inizializzazione --- //
-    const buildLabel = document.getElementById('build-label');
-    if (buildLabel) buildLabel.textContent = 'build ' + APP_BUILD;
+    const buildTag = document.getElementById('build-tag');
+    if (buildTag) buildTag.textContent = 'v' + APP_BUILD;
     loadCards();
     switchView(quizView); // Inizia con la vista Quiz
 
